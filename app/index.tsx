@@ -1,30 +1,17 @@
-import { Link, useNavigation, useRouter } from "expo-router"
-import { Button } from "react-native";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-
-
-
-
-export default function Page(){
-  const router = useRouter();
-  const navigation = useNavigation();
-  
-  return(
-    <>
-    <h1>ini adalah halaman pertama</h1>
-    <Link replace href={"/second"}>
- <h1>
- Ke Halaman Dua
- </h1>
-    </Link>
-    <Button title="Pindah mengunakan useRouter" onPress={()=>{
-      router.replace("/second")
-    }}/>
-    <Button
-    title="Pindah mengunakan useNAvigation" onPress={()=>{
-      navigation.navigate()
-    }}
-    />
-    </>
+export default function Index() {
+  const [post, setPost] = useState<string>()
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/posts").then(
+      (get) => {
+        setPost(get.data[0].title)
+      }
+      //abc
+    )
+  }, [])
+  return (
+    <h1>{post}</h1>
   )
 }
